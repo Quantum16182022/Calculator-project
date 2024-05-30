@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>New Project</title>
+    <style>
+      /* Add your styles here */
+      body {
+        background-color: aquamarine;
+        text-align: center;
+        margin: 3%;
+      }
+      .container {
+        width: 300px;
+        height: 600px;
+        background-color: rgb(18, 190, 233);
+        border: 1px solid black;
+        border-radius: 5px;
+        margin: 0 auto;
+        padding: 10px;
+      }
+      .display {
+        background-color: azure;
+        /* border: 1px solid rgb(247, 7, 7); */
+        font-size: 1cm;
+        padding: 10px;
+        text-align: right;
+        margin: 5px;
+        box-shadow: inset 0 0 2px black;
+      }
+      .buttons {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 5px;
+      }
+      button {
+        background-color: azure;
+        border-radius: 5px;
+        padding: 10px;
+        box-shadow: 0 0 2px rgb(63, 63, 63);
+      }
+      button:hover {
+        background-color: rgba(151, 151, 151, 0.3);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="display">0</div>
+      <div class="buttons">
+        <button>7</button>
+        <button>8</button>
+        <button>9</button>
+        <button>/</button>
+        <button>4</button>
+        <button>5</button>
+        <button>6</button>
+        <button>*</button>
+        <button>1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>-</button>
+        <button>0</button>
+        <button>.</button>
+        <button>=</button>
+        <button>+</button>
+        <button>C</button>
+        <button>←</button>
+      </div>
+    </div>
+    <script>
+              // Add your scripts here
+        let displayValue = "0";
+      let operators = ["=", "+", "-", "/"];
+      let total = null;
+      let usedOperators = [];
+      // Get the button element
+      const display = document.querySelector(".display");
+      const buttons = document.querySelectorAll(".buttons button");
+
+      // Add an event listener to the button
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+          // do your logic here
+          switch (button.textContent) {
+            case "←":
+              if (displayValue[displayValue.length - 1] === ".") {
+                usedOperators.pop();
+              }
+              if (operators.includes(displayValue[displayValue.length - 1])) {
+                usedOperators.pop();
+              }
+              displayValue = displayValue.slice(0, -1);
+              if (displayValue === "") {
+                displayValue = "0";
+              }
+              break;
+            case "C":
+              displayValue = "0";
+              total = null;
+              usedOperators = [];
+              break;
+            case ".":
+              if (usedOperators[usedOperators.length - 1] !== ".") {
+                displayValue += ".";
+                usedOperators.push(".");
+              } else {
+                alert("Invalid input");
+              }
+              break;
+              case "+":
+              case "-":
+              case "*":
+              case "/":
+        // Add the operator to the display value and the usedOperators array
+        displayValue += button.textContent;
+        usedOperators.push(button.textContent);
+        break;
+      case "=":
+        // Calculate the total and update the display value
+        total = eval(displayValue);
+        displayValue = String(total);
+        break;
+      default:
+        // If the button text is not any of the above cases, it must be a number
+        if (displayValue === "0") {
+        
+          displayValue = button.textContent;
+        } else {
+          // Add the number to the display value
+          displayValue += button.textContent;
+        }
+        break;
+    }
+
+    display.textContent = displayValue;
+  });
+});
+          
+    </script>
+  </body>
+</html>
